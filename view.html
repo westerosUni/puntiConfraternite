@@ -1,1 +1,76 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Punteggi - LARP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+    <a href="punti.html" class="link-punteggi"><h1 class="titolo-pagina">Punteggi</h1></a>
+    
+
+    <div class="Confraternite">
+
+        <div class="casata" id="stark">
+            <div class="casata-header">
+                <h2>Stark</h2>
+            </div>
+            <div class="punteggio">142</div>
+        </div>
+
+        <div class="casata" id="lannister">
+            <div class="casata-header">
+                <h2>Lannister</h2>
+            </div>
+            <div class="punteggio">198</div>
+        </div>
+
+        <div class="casata Targaryen" id="targaryen">
+            <div class="casata-header">
+                <h2>Targaryen</h2>
+            </div>
+            <div class="punteggio">231</div>
+        </div>
+
+        <div class="casata" id="baratheon">
+            <div class="casata-header">
+                <h2>Baratheon</h2>
+            </div>
+            <div class="punteggio">175</div>
+        </div>
+
+        <div class="casata" id="greyjoy">
+            <div class="casata-header">
+                <h2>Greyjoy</h2>
+            </div>
+            <div class="punteggio">89</div>
+        </div>
+    </div>
+    <script>
+        const STORAGE_KEY = 'larp_punteggi';
+        const defaults = { stark: 142, lannister: 198, targaryen: 231, baratheon: 175, greyjoy: 89 };
+
+        function caricaPunteggi() {
+            try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+            catch { return {}; }
+        }
+
+        function aggiornaPunteggi() {
+            const dati = caricaPunteggi();
+            document.querySelectorAll('.casata').forEach(card => {
+                const id = card.id;
+                const valore = (id in dati) ? dati[id] : defaults[id];
+                const el = card.querySelector('.punteggio');
+                if (el) el.textContent = valore;
+            });
+        }
+        aggiornaPunteggi();
+        window.addEventListener('storage', aggiornaPunteggi);
+    </script>
+
+</body>
+</html>
